@@ -13,6 +13,9 @@
 		5EF20E2822AB9BFA009DAF20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EF20E2722AB9BFA009DAF20 /* Assets.xcassets */; };
 		5EF20E2B22AB9BFA009DAF20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EF20E2922AB9BFA009DAF20 /* LaunchScreen.storyboard */; };
 		5EF20E2E22AB9BFA009DAF20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E2D22AB9BFA009DAF20 /* main.m */; };
+		5EF20E3622ABACEB009DAF20 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E3522ABACEB009DAF20 /* Contact.m */; };
+		5EF20E3A22ABDCDC009DAF20 /* CeilViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E3822ABDCDC009DAF20 /* CeilViewTableViewCell.m */; };
+		5EF20E3B22ABDCDC009DAF20 /* CeilViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF20E3922ABDCDC009DAF20 /* CeilViewTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,11 @@
 		5EF20E2A22AB9BFA009DAF20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5EF20E2C22AB9BFA009DAF20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5EF20E2D22AB9BFA009DAF20 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5EF20E3422ABACEB009DAF20 /* Contact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		5EF20E3522ABACEB009DAF20 /* Contact.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		5EF20E3722ABDCDC009DAF20 /* CeilViewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CeilViewTableViewCell.h; sourceTree = "<group>"; };
+		5EF20E3822ABDCDC009DAF20 /* CeilViewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CeilViewTableViewCell.m; sourceTree = "<group>"; };
+		5EF20E3922ABDCDC009DAF20 /* CeilViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CeilViewTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +75,11 @@
 				5EF20E2922AB9BFA009DAF20 /* LaunchScreen.storyboard */,
 				5EF20E2C22AB9BFA009DAF20 /* Info.plist */,
 				5EF20E2D22AB9BFA009DAF20 /* main.m */,
+				5EF20E3422ABACEB009DAF20 /* Contact.h */,
+				5EF20E3522ABACEB009DAF20 /* Contact.m */,
+				5EF20E3722ABDCDC009DAF20 /* CeilViewTableViewCell.h */,
+				5EF20E3822ABDCDC009DAF20 /* CeilViewTableViewCell.m */,
+				5EF20E3922ABDCDC009DAF20 /* CeilViewTableViewCell.xib */,
 			);
 			path = Conttacts;
 			sourceTree = "<group>";
@@ -129,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EF20E2B22AB9BFA009DAF20 /* LaunchScreen.storyboard in Resources */,
+				5EF20E3B22ABDCDC009DAF20 /* CeilViewTableViewCell.xib in Resources */,
 				5EF20E2822AB9BFA009DAF20 /* Assets.xcassets in Resources */,
 				5EF20E2622AB9BF5009DAF20 /* Main.storyboard in Resources */,
 			);
@@ -141,7 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EF20E3622ABACEB009DAF20 /* Contact.m in Sources */,
 				5EF20E2322AB9BF5009DAF20 /* ViewController.m in Sources */,
+				5EF20E3A22ABDCDC009DAF20 /* CeilViewTableViewCell.m in Sources */,
 				5EF20E2E22AB9BFA009DAF20 /* main.m in Sources */,
 				5EF20E2022AB9BF5009DAF20 /* AppDelegate.m in Sources */,
 			);
