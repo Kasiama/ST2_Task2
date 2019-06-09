@@ -16,6 +16,7 @@
 		5EF20E3622ABACEB009DAF20 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E3522ABACEB009DAF20 /* Contact.m */; };
 		5EF20E3A22ABDCDC009DAF20 /* CeilViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E3822ABDCDC009DAF20 /* CeilViewTableViewCell.m */; };
 		5EF20E3B22ABDCDC009DAF20 /* CeilViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF20E3922ABDCDC009DAF20 /* CeilViewTableViewCell.xib */; };
+		5EF20E3E22AC2F19009DAF20 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E3D22AC2F19009DAF20 /* HeaderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		5EF20E3722ABDCDC009DAF20 /* CeilViewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CeilViewTableViewCell.h; sourceTree = "<group>"; };
 		5EF20E3822ABDCDC009DAF20 /* CeilViewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CeilViewTableViewCell.m; sourceTree = "<group>"; };
 		5EF20E3922ABDCDC009DAF20 /* CeilViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CeilViewTableViewCell.xib; sourceTree = "<group>"; };
+		5EF20E3C22AC2F19009DAF20 /* HeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		5EF20E3D22AC2F19009DAF20 /* HeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 				5EF20E3722ABDCDC009DAF20 /* CeilViewTableViewCell.h */,
 				5EF20E3822ABDCDC009DAF20 /* CeilViewTableViewCell.m */,
 				5EF20E3922ABDCDC009DAF20 /* CeilViewTableViewCell.xib */,
+				5EF20E3C22AC2F19009DAF20 /* HeaderView.h */,
+				5EF20E3D22AC2F19009DAF20 /* HeaderView.m */,
 			);
 			path = Conttacts;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EF20E3622ABACEB009DAF20 /* Contact.m in Sources */,
+				5EF20E3E22AC2F19009DAF20 /* HeaderView.m in Sources */,
 				5EF20E2322AB9BF5009DAF20 /* ViewController.m in Sources */,
 				5EF20E3A22ABDCDC009DAF20 /* CeilViewTableViewCell.m in Sources */,
 				5EF20E2E22AB9BFA009DAF20 /* main.m in Sources */,

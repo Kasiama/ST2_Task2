@@ -26,7 +26,6 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CeilViewTableViewCell"];
      self.tableView = [UITableView new];
     [self.view addSubview:self.tableView];
-    
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     
     if (@available(iOS 11.0, *)) {
@@ -49,15 +48,86 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    UINib *nib = [UINib nibWithNibName:@"CeilViewTableViewCell" bundle:nil];
+        UINib *nib = [UINib nibWithNibName:@"CeilViewTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"CeilViewTableViewCell"];
-    
     self.tableView.tableFooterView = [UIView new];
-    NSString *str = @"sdd";
+    
+    NSMutableArray *arr = [self getArrOfSections];
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    for(NSString *key in arr ){
+        for(Contact *value in self.contacts){
+            if([key isEqualToString:[value.lastName substringToIndex:1]]){
+                if ([dictionary objectForKey:key] == nil )
+                {
+                 [dictionary setObject:[NSMutableArray new] forKey:key];
+                    [[dictionary objectForKey:key] addObject:value];
+                }
+    
+                else
+                [[dictionary objectForKey:key] addObject:value];
+            }
+                else if([key isEqualToString:@"#"] &&
+([value.lastName characterAtIndex:0]<65
+ || ([value.lastName characterAtIndex:0]<97  && [value.lastName characterAtIndex:0]>90)
+ || ([value.lastName characterAtIndex:0]<1040  && [value.lastName characterAtIndex:0]>122)
+ || ([value.lastName characterAtIndex:0]>1103)))
+            {
+                if ([dictionary objectForKey:@"#"] == nil )
+                {
+                    [dictionary setObject:[NSMutableArray new] forKey:@"#"];
+                    [[dictionary objectForKey:@"#"] addObject:value];
+                }
+                
+                else
+                    [[dictionary objectForKey:@"#"] addObject:value];
+            }
+            
+        }
+    }
+    
+    
+   
     
 }
-
+-(NSMutableArray*)getArrOfSections{
+    NSMutableSet *setEnglish = [[NSMutableSet alloc] init];
+    NSMutableSet *setRussian = [[NSMutableSet alloc] init];
+    Boolean is = NO;
+    for(Contact *con in self.contacts){
+        NSString *let = [con.lastName substringToIndex:1];
+        int a = [let characterAtIndex:0];
+        if((a>=65 && a<=90) || (a>=97 && a <=122) )
+        {
+              //65-90 97-122 1072-1103 1040 -1071
+        [setEnglish addObject:let];
+        }
+       else if  (a>=1040 && a<=1103)
+        {
+            [setRussian addObject: let];
+        }
+        else is = YES;
+        
+    
+    }
+    NSMutableArray *arrEnglish = [[NSMutableArray alloc] initWithArray:[setEnglish allObjects]];
+    NSMutableArray *arrRussian= [[NSMutableArray alloc] initWithArray:[setRussian allObjects]];
+     [arrEnglish sortUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
+        int a = [str1 characterAtIndex:0];
+        int b = [str2 characterAtIndex:0];
+         return a>b;
+    }];
+    [arrRussian sortUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
+        int a = [str1 characterAtIndex:0];
+        int b = [str2 characterAtIndex:0];
+        return a>b;
+    }];
+    
+    NSArray *newArray=arrRussian?[arrRussian arrayByAddingObjectsFromArray:arrEnglish]:[[NSArray alloc] initWithArray:arrEnglish];
+    NSMutableArray *answ=[[NSMutableArray alloc] initWithArray:newArray];
+    if (is)
+        [answ addObject:@"#"];
+    return answ;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }

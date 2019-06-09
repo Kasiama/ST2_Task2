@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CeilViewTableViewCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *contactName;
-@property (strong, nonatomic) IBOutlet UIImageView *contactImage;
+@property (strong, nonatomic) IBOutlet UIButton *infoBtn;
+
 
 @end
 
