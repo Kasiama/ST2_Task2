@@ -283,6 +283,20 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     
     
 }
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        NSString *sectionTitle = [self.arrOfSections objectAtIndex:indexPath.section];
+        [ [self.dictionary objectForKey:sectionTitle]removeObjectAtIndex:indexPath.row];
+        if([[self.dictionary objectForKey:sectionTitle] count ]==0)
+            [self.arrOfSections removeObject:sectionTitle];
+        
+        [self.tableView reloadData];
+    }];
+    
+    UISwipeActionsConfiguration *configuraion = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
+    configuraion.performsFirstActionWithFullSwipe = NO;
+    return configuraion;
+}
 
 @end
 
