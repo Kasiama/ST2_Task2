@@ -103,7 +103,28 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     
    
     
+    
 }
+
+
+-(void)showAccessDeniedScreen {
+    self.tableView.hidden = YES;
+    self.view.backgroundColor = [UIColor colorWithRed:0.59 green:0.59 blue:0.59 alpha:1];
+    UILabel *accessDeniedLabel = [UILabel new];
+    UIFont *system17RegularFont = [UIFont systemFontOfSize:17 weight:UIFontWeightRegular];
+    accessDeniedLabel.textColor = [UIColor blackColor];
+    accessDeniedLabel.font = system17RegularFont;
+    accessDeniedLabel.text = @"Доступ к списку контактов запрещен. Войдите в Settings и разрешите доступ";
+    accessDeniedLabel.numberOfLines = 0;
+    accessDeniedLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:accessDeniedLabel];
+    accessDeniedLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[[accessDeniedLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                                              [accessDeniedLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+                                              [accessDeniedLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:20],
+                                              [self.view.trailingAnchor constraintEqualToAnchor:accessDeniedLabel.trailingAnchor constant:20]]];
+}
+
 -(NSMutableArray*)getArrOfSections{
     NSMutableSet *setEnglish = [[NSMutableSet alloc] init];
     NSMutableSet *setRussian = [[NSMutableSet alloc] init];
@@ -180,6 +201,11 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                 }
             }];
         }
+        else
+        {
+            [self showAccessDeniedScreen];
+            
+        }
         
         
     }];
@@ -213,7 +239,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     NSString *numberOfContacts = [NSString stringWithFormat:@"контактов: %ld", (long)[[self.dictionary objectForKey:letter]count]];
      headerCell.contactsLabel.text = numberOfContacts;
     headerCell.expanded = [self.expanded[section] boolValue];
-    headerCell.arrowImg.image = [UIImage imageNamed:@"arrow_up"];
+    headerCell.arrowImg.image = [UIImage imageNamed:@"arrow_down"];
    headerCell.section = section;
     headerCell.listener = self;
     return headerCell;
