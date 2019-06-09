@@ -9,12 +9,18 @@
 #import "ViewController.h"
 #import "Contact.h"
 #import "CeilViewTableViewCell.h"
+#import "HeaderCell2.h"
 #import <Contacts/Contacts.h>
 
+NSString * const cellReuseId = @"cellReuseId";
+NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 
-@interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource,DemoHeaderViewListener2>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *contacts;
+@property (strong, nonatomic) NSMutableArray *arrOfSections;
+@property (strong, nonatomic) NSMutableArray *expanded;
+@property (strong, nonatomic) NSMutableDictionary *dictionary;
 @end
 
 @implementation ViewController
@@ -23,8 +29,10 @@
     [super viewDidLoad];
     _contacts = [[NSMutableArray alloc] init];
     [self getArrOfContacts];
+    self.tableView = [UITableView new];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CeilViewTableViewCell"];
-     self.tableView = [UITableView new];
+    [self.tableView registerClass:[HeaderCell2 class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
+    
     [self.view addSubview:self.tableView];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -48,23 +56,30 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-        UINib *nib = [UINib nibWithNibName:@"CeilViewTableViewCell" bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"CeilViewTableViewCell"];
-    self.tableView.tableFooterView = [UIView new];
+    UINib *nibb = [UINib nibWithNibName:@"CeilViewTableViewCell" bundle:nil];
+    [self.tableView registerNib:nibb forCellReuseIdentifier:@"CeilViewTableViewCell"];
+   
     
-    NSMutableArray *arr = [self getArrOfSections];
-    NSMutableDictionary *dictionary = [NSMutableDictionary new];
-    for(NSString *key in arr ){
+    _arrOfSections = [[NSMutableArray alloc] init];
+    _arrOfSections = [self getArrOfSections];
+    
+    self.expanded = [NSMutableArray array];
+    for(NSInteger i=0; i< self.arrOfSections.count; i++){
+        [self.expanded addObject:@NO];
+    }
+    
+    _dictionary = [NSMutableDictionary new];
+    for(NSString *key in _arrOfSections ){
         for(Contact *value in self.contacts){
             if([key isEqualToString:[value.lastName substringToIndex:1]]){
-                if ([dictionary objectForKey:key] == nil )
+                if ([_dictionary objectForKey:key] == nil )
                 {
-                 [dictionary setObject:[NSMutableArray new] forKey:key];
-                    [[dictionary objectForKey:key] addObject:value];
+                 [_dictionary setObject:[NSMutableArray new] forKey:key];
+                    [[_dictionary objectForKey:key] addObject:value];
                 }
     
                 else
-                [[dictionary objectForKey:key] addObject:value];
+                [[_dictionary objectForKey:key] addObject:value];
             }
                 else if([key isEqualToString:@"#"] &&
 ([value.lastName characterAtIndex:0]<65
@@ -72,14 +87,14 @@
  || ([value.lastName characterAtIndex:0]<1040  && [value.lastName characterAtIndex:0]>122)
  || ([value.lastName characterAtIndex:0]>1103)))
             {
-                if ([dictionary objectForKey:@"#"] == nil )
+                if ([_dictionary objectForKey:@"#"] == nil )
                 {
-                    [dictionary setObject:[NSMutableArray new] forKey:@"#"];
-                    [[dictionary objectForKey:@"#"] addObject:value];
+                    [_dictionary setObject:[NSMutableArray new] forKey:@"#"];
+                    [[_dictionary objectForKey:@"#"] addObject:value];
                 }
                 
                 else
-                    [[dictionary objectForKey:@"#"] addObject:value];
+                    [[_dictionary objectForKey:@"#"] addObject:value];
             }
             
         }
@@ -128,25 +143,6 @@
         [answ addObject:@"#"];
     return answ;
 }
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.contacts.count;
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CeilViewTableViewCell *ceil = (CeilViewTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:@"CeilViewTableViewCell" forIndexPath:indexPath];
-    Contact *contact = [self.contacts objectAtIndex:indexPath.row];
-    if(ceil == nil) {
-        ceil = (CeilViewTableViewCell *)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContactTableViewCell"];
-        
-    }
-     ceil.contactName.text = [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
-    return ceil;
-}
 
 -(void)getArrOfContacts{
     CNContactStore *store = [[CNContactStore alloc] init];
@@ -164,8 +160,8 @@
                     newContact.firstName = contact.givenName;
                     newContact.lastName = contact.familyName;
                     if(contact.imageDataAvailable){
-                    UIImage *img = [[UIImage alloc] initWithData:contact.imageData];
-                    newContact.image = img;
+                        UIImage *img = [[UIImage alloc] initWithData:contact.imageData];
+                        newContact.image = img;
                     }
                     else
                     {
@@ -185,7 +181,82 @@
             }];
         }
         
-    
+        
     }];
 }
+
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return _arrOfSections.count;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSNumber *state  = self.expanded[section];
+   if ([state boolValue])
+    {
+        return 0;
+    }
+   else{
+       NSString *sectionTitle = [self.arrOfSections objectAtIndex:section];
+       NSArray *sectionContacts = [self.dictionary objectForKey:sectionTitle];
+       return [sectionContacts count];
+   };
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    HeaderCell2 *headerCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionHeaderReuseId];
+    NSString *letter = [self.arrOfSections objectAtIndex:section];
+    headerCell.sectionLetter.text = letter;
+    NSString *numberOfContacts = [NSString stringWithFormat:@"контактов: %ld", (long)[[self.dictionary objectForKey:letter]count]];
+     headerCell.contactsLabel.text = numberOfContacts;
+    headerCell.expanded = [self.expanded[section] boolValue];
+    headerCell.arrowImg.image = [UIImage imageNamed:@"arrow_up"];
+   headerCell.section = section;
+    headerCell.listener = self;
+    return headerCell;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CeilViewTableViewCell *ceil = (CeilViewTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:@"CeilViewTableViewCell" forIndexPath:indexPath];
+    
+    
+   NSArray *sectionContacts = [self.dictionary objectForKey:[self.arrOfSections objectAtIndex:indexPath.section]];
+    Contact *contact = [sectionContacts objectAtIndex:indexPath.row];
+     ceil.contactName.text = [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
+    return ceil;
+}
+
+//demoheaderview
+- (void)didTapOnHeader:(HeaderCell2 *)header{
+    BOOL state = [self.expanded[header.section] boolValue];
+    self.expanded[header.section] = @(!state);
+    header.expanded = !state;
+    if (state) {
+        NSMutableArray *paths = [NSMutableArray array];
+        NSInteger a = [[self.dictionary valueForKey:[self.arrOfSections objectAtIndex:header.section]]count ];
+        for (NSInteger i =0; i<a; i++) {
+            NSIndexPath *path =[NSIndexPath indexPathForRow:i inSection:header.section];
+            [paths addObject:path];
+        }
+    
+        [self.tableView insertRowsAtIndexPaths:paths  withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else{
+        NSMutableArray *paths = [NSMutableArray array];
+        NSInteger a = [[self.dictionary valueForKey:[self.arrOfSections objectAtIndex:header.section]]count ];
+        for (NSInteger i =0; i<a; i++) {
+            NSIndexPath *path =[NSIndexPath indexPathForRow:i inSection:header.section];
+            [paths addObject:path];
+        }
+        [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+    }
+    
+    
+}
+
 @end
+
