@@ -254,7 +254,8 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                     Contact *newContact = [[Contact alloc] init];
                     newContact.firstName = contact.givenName;
                     newContact.lastName = contact.familyName;
-                    newContact.fulname =  [NSString stringWithFormat:@"%@%@",newContact.lastName,newContact.firstName];
+                   // newContact.fulname = @"dkdd";
+                   newContact.fulname =  [NSString stringWithFormat:@"%@%@",newContact.lastName,newContact.firstName];
                     if(contact.imageDataAvailable){
                         UIImage *img = [[UIImage alloc] initWithData:contact.imageData];
                         newContact.image = img;
@@ -399,19 +400,38 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     
     
 }
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//        NSString *sectionTitle = [self.arrOfSections objectAtIndex:indexPath.section];
+//        [ [self.dictionary objectForKey:sectionTitle]removeObjectAtIndex:indexPath.row];
+//        if([[self.dictionary objectForKey:sectionTitle] count ]==0)
+//            [self.arrOfSections removeObject:sectionTitle];
+//        
+//        
+//        [self.tableView reloadData];
+//    }];
+//    
+//    UISwipeActionsConfiguration *configuraion = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
+//    configuraion.performsFirstActionWithFullSwipe = NO;
+//    return configuraion;
+//}
+
+-(NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         NSString *sectionTitle = [self.arrOfSections objectAtIndex:indexPath.section];
-        [ [self.dictionary objectForKey:sectionTitle]removeObjectAtIndex:indexPath.row];
+        NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[self.dictionary objectForKey:sectionTitle]];
+        //[ [self.dictionary objectForKey:sectionTitle] removeObjectAtIndex:indexPath.row];
+        [arr removeObjectAtIndex:indexPath.row];
+        [self.dictionary removeObjectForKey:sectionTitle];
+        [self.dictionary setObject:arr forKey:sectionTitle];
         if([[self.dictionary objectForKey:sectionTitle] count ]==0)
             [self.arrOfSections removeObject:sectionTitle];
-        
         [self.tableView reloadData];
     }];
+    deleteAction.backgroundColor = [UIColor redColor];
+    return @[deleteAction];
     
-    UISwipeActionsConfiguration *configuraion = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
-    configuraion.performsFirstActionWithFullSwipe = NO;
-    return configuraion;
 }
 -(void)showInfoControllerWithContact:(Contact *)contact {
     ViewController2 *vc = [[ViewController2 alloc] initWithNibName:@"ViewController2" bundle:nil];

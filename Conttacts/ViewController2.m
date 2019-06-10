@@ -21,7 +21,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
-    
+    self.title = @"Контакты";
     [self.tableView registerClass:[PhoneCell class] forCellReuseIdentifier:@"PhoneTableViewCell"];
   //  UINib *nibb = [UINib nibWithNibName:@"Person+imgCellView" bundle:nil];
     //[self.tableView registerNib:nibb forCellReuseIdentifier:@"PhotoAndNameTableViewCell"];
@@ -33,8 +33,9 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backBtn] ;
     self.navigationItem.leftBarButtonItem = backButton;
     
-    [self.navigationItem.leftBarButtonItem.customView.widthAnchor constraintEqualToConstant:30].active = YES;
-    [self.navigationItem.leftBarButtonItem.customView.heightAnchor constraintEqualToConstant:30].active = YES;
+    [self.navigationItem.leftBarButtonItem.customView.widthAnchor constraintEqualToConstant:20].active = YES;
+   // [self.navigationItem.leftBarButtonItem.customView.heightAnchor constraintEqualToConstant:30].active = YES;
+    [self.navigationItem.leftBarButtonItem.customView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:10];
 }
 
 
