@@ -311,12 +311,13 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     Contact *contact = [section objectAtIndex:indexPath.row];
     
     NSMutableString *contactDetails = [NSMutableString stringWithString:@"Контакт"];
-    if (contact.firstName.length != 0) {
-        [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.firstName]];
-    }
     if (contact.lastName.length != 0) {
         [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.lastName]];
     }
+    if (contact.firstName.length != 0) {
+        [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.firstName]];
+    }
+   
     if (contact.phones.count != 0) {
         [contactDetails appendString:[NSString stringWithFormat:@", номер телефона %@", contact.phones[0] ]];
     }
