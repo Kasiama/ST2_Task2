@@ -27,16 +27,18 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 
 @implementation ViewController
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _contacts = [[NSMutableArray alloc] init];
-    [self getArrOfContacts];
-    self.tableView = [UITableView new];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CeilViewTableViewCell"];
-    [self.tableView registerClass:[HeaderCell2 class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
     
+    self.tableView = [UITableView new];
+    //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CeilViewTableViewCell"];
+    [self.tableView registerClass:[HeaderCell2 class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
+     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.tableView];
-    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    //self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     
     if (@available(iOS 11.0, *)) {
         [NSLayoutConstraint activateConstraints:@[
@@ -63,50 +65,22 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     [self.tableView registerNib:nibb forCellReuseIdentifier:@"CeilViewTableViewCell"];
    
     
+//    _arrOfSections = [[NSMutableArray alloc] init];
+//    _arrOfSections = [self getArrOfSections];
+//
+//    self.expanded = [NSMutableArray array];
+//    for(NSInteger i=0; i< self.arrOfSections.count; i++){
+//        [self.expanded addObject:@NO];
+//    }
+//
+//    _dictionary = [NSMutableDictionary new];
+//    _dictionary = [self getDictionary];
+    
+    _contacts = [[NSMutableArray alloc] init];
+    _dictionary=[[NSMutableDictionary alloc] init];
     _arrOfSections = [[NSMutableArray alloc] init];
-    _arrOfSections = [self getArrOfSections];
-    
     self.expanded = [NSMutableArray array];
-    for(NSInteger i=0; i< self.arrOfSections.count; i++){
-        [self.expanded addObject:@NO];
-    }
-    
-    _dictionary = [NSMutableDictionary new];
-    for(NSString *key in _arrOfSections ){
-        for(Contact *value in self.contacts){
-            if([key isEqualToString:[value.lastName substringToIndex:1]]){
-                if ([_dictionary objectForKey:key] == nil )
-                {
-                 [_dictionary setObject:[NSMutableArray new] forKey:key];
-                    [[_dictionary objectForKey:key] addObject:value];
-                }
-    
-                else
-                [[_dictionary objectForKey:key] addObject:value];
-            }
-                else if([key isEqualToString:@"#"] &&
-([value.lastName characterAtIndex:0]<65
- || ([value.lastName characterAtIndex:0]<97  && [value.lastName characterAtIndex:0]>90)
- || ([value.lastName characterAtIndex:0]<1040  && [value.lastName characterAtIndex:0]>122)
- || ([value.lastName characterAtIndex:0]>1103)))
-            {
-                if ([_dictionary objectForKey:@"#"] == nil )
-                {
-                    [_dictionary setObject:[NSMutableArray new] forKey:@"#"];
-                    [[_dictionary objectForKey:@"#"] addObject:value];
-                }
-                
-                else
-                    [[_dictionary objectForKey:@"#"] addObject:value];
-            }
-            
-        }
-    }
-    
-    
-   
-    
-    
+    [self getArrOfContacts];
 }
 
 
@@ -133,7 +107,25 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     NSMutableSet *setRussian = [[NSMutableSet alloc] init];
     Boolean is = NO;
     for(Contact *con in self.contacts){
+         if([con.lastName isEqualToString:@""]){
+            NSString *let = [con.firstName substringToIndex:1];
+            let = [let uppercaseString];
+            int a = [let characterAtIndex:0];
+            if((a>=65 && a<=90) || (a>=97 && a <=122) )
+            {
+                //65-90 97-122 1072-1103 1040 -1071
+                [setEnglish addObject:let];
+            }
+            else if  (a>=1040 && a<=1103)
+            {
+                [setRussian addObject: let];
+            }
+            else is = YES;
+        }
+
+        else{
         NSString *let = [con.lastName substringToIndex:1];
+            let = [let uppercaseString];
         int a = [let characterAtIndex:0];
         if((a>=65 && a<=90) || (a>=97 && a <=122) )
         {
@@ -145,7 +137,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
             [setRussian addObject: let];
         }
         else is = YES;
-        
+        }
     
     }
     NSMutableArray *arrEnglish = [[NSMutableArray alloc] initWithArray:[setEnglish allObjects]];
@@ -168,18 +160,86 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     return answ;
 }
 
+-(NSMutableDictionary*)getDictionary{
+    NSMutableDictionary *dictionary =[NSMutableDictionary new];
+   for(NSString *key in _arrOfSections ) {
+        for(Contact *value in self.contacts){
+            if([value.lastName isEqualToString:@""]){
+                if([key isEqualToString:[[value.firstName substringToIndex:1]uppercaseString]]){
+                    if ([dictionary objectForKey:key] == nil )
+                    {
+                        [dictionary setObject:[NSMutableArray new] forKey:key];
+                        [[dictionary objectForKey:key] addObject:value];
+                    }
+                    
+                    else
+                        [[dictionary objectForKey:key] addObject:value];
+                }
+                else if([key isEqualToString:@"#"] &&
+                        ([value.firstName characterAtIndex:0]<65
+                         || ([value.firstName characterAtIndex:0]<97  && [value.firstName characterAtIndex:0]>90)
+                         || ([value.firstName characterAtIndex:0]<1040  && [value.firstName characterAtIndex:0]>122)
+                         || ([value.firstName characterAtIndex:0]>1103)))
+                {
+                    if ([dictionary objectForKey:@"#"] == nil )
+                    {
+                        [dictionary setObject:[NSMutableArray new] forKey:@"#"];
+                        [[dictionary objectForKey:@"#"] addObject:value];
+                    }
+                    
+                    else
+                        [[dictionary objectForKey:@"#"] addObject:value];
+                }
+            }
+            
+            else{
+                if([key isEqualToString:[[value.lastName substringToIndex:1]uppercaseString]]){
+                    if ([dictionary objectForKey:key] == nil )
+                    {
+                        [dictionary setObject:[NSMutableArray new] forKey:key];
+                        [[dictionary objectForKey:key] addObject:value];
+                    }
+                    
+                    else
+                        [[dictionary objectForKey:key] addObject:value];
+                }
+                else if([key isEqualToString:@"#"] &&
+                        ([value.lastName characterAtIndex:0]<65
+                         || ([value.lastName characterAtIndex:0]<97  && [value.lastName characterAtIndex:0]>90)
+                         || ([value.lastName characterAtIndex:0]<1040  && [value.lastName characterAtIndex:0]>122)
+                         || ([value.lastName characterAtIndex:0]>1103)))
+                {
+                    if ([dictionary objectForKey:@"#"] == nil )
+                    {
+                        [dictionary setObject:[NSMutableArray new] forKey:@"#"];
+                        [[dictionary objectForKey:@"#"] addObject:value];
+                    }
+                    
+                    else
+                        [[dictionary objectForKey:@"#"] addObject:value];
+                }
+                
+            }
+        }
+    }
+    
+    return dictionary;
+}
 -(void)getArrOfContacts{
     CNContactStore *store = [[CNContactStore alloc] init];
     [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
         if (granted == YES) {
+             __weak __typeof__(self) weakSelf = self;
             //keys with fetching properties
             NSArray *keys = @[CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey,CNContactImageDataAvailableKey,CNContactThumbnailImageDataKey ];
             CNContactFetchRequest *request = [[CNContactFetchRequest alloc] initWithKeysToFetch:keys];
             NSError *error;
             BOOL success = [store enumerateContactsWithFetchRequest:request error:&error usingBlock:^(CNContact * __nonnull contact, BOOL * __nonnull stop) {
+               
                 if (error) {
                     NSLog(@"error fetching contacts %@", error);
                 } else {
+                    
                     Contact *newContact = [[Contact alloc] init];
                     newContact.firstName = contact.givenName;
                     newContact.lastName = contact.familyName;
@@ -203,10 +263,25 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                     
                 }
             }];
+            self.arrOfSections = [[NSMutableArray alloc] init];
+            self.arrOfSections = [self getArrOfSections];
+            
+            self.expanded = [NSMutableArray array];
+            for(NSInteger i=0; i< self.arrOfSections.count; i++){
+                [self.expanded addObject:@NO];
+            }
+            self.dictionary =[self getDictionary];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView reloadData];
+            });
         }
         else
         {
-            [self showAccessDeniedScreen];
+             __weak __typeof__(self) weakSelf = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf showAccessDeniedScreen];
+            });
             
         }
         
