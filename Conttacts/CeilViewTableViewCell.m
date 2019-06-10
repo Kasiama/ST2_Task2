@@ -21,7 +21,9 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    UIView *selectedColorBackgroundView = [UIView new];
+    selectedColorBackgroundView.backgroundColor = [UIColor colorWithRed:0.996 green:0.9647 blue:0.9019 alpha:1];
+    self.selectedBackgroundView = selectedColorBackgroundView;
     // Configure the view for the selected state
 }
 - (void)handleInfoIconTap:(UITapGestureRecognizer *)recognizer {

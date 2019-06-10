@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lt-r8-hHD">
-                        <rect key="frame" x="21" y="11" width="259" height="21"/>
+                        <rect key="frame" x="25" y="11" width="259" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="W27-pu-YlT"/>
                             <constraint firstAttribute="width" constant="259" id="YS0-ht-NS5"/>
@@ -30,18 +30,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlq-xy-GyS">
-                        <rect key="frame" x="292" y="11" width="22" height="22"/>
+                        <rect key="frame" x="278" y="11" width="22" height="22"/>
                         <color key="tintColor" red="0.85098039219999999" green="0.56862745100000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </button>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="tintColor" red="0.85098039219999999" green="0.56862745100000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="dlq-xy-GyS" secondAttribute="trailing" constant="6" id="0uB-Oy-HFc"/>
+                    <constraint firstAttribute="trailing" secondItem="dlq-xy-GyS" secondAttribute="trailing" constant="20" id="0uB-Oy-HFc"/>
                     <constraint firstAttribute="bottom" secondItem="dlq-xy-GyS" secondAttribute="bottom" constant="11.5" id="9Ah-nE-Pnz"/>
+                    <constraint firstItem="3lt-r8-hHD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="SQd-EE-PbD"/>
                     <constraint firstItem="dlq-xy-GyS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Sam-OG-m0D"/>
                     <constraint firstItem="3lt-r8-hHD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Wao-hF-2bZ"/>
                     <constraint firstAttribute="bottom" secondItem="3lt-r8-hHD" secondAttribute="bottom" constant="12.5" id="fek-CX-lde"/>
-                    <constraint firstAttribute="trailing" secondItem="dlq-xy-GyS" secondAttribute="trailing" constant="6" id="fxL-a3-til"/>
-                    <constraint firstItem="3lt-r8-hHD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="21" id="ne2-tc-I5g"/>
+                    <constraint firstAttribute="trailing" secondItem="dlq-xy-GyS" secondAttribute="trailing" constant="20" id="fxL-a3-til"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>

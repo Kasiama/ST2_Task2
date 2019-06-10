@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong)NSString *lastName;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSMutableArray *phones;
+@property (nonatomic,strong)NSString *fulname;
 @end
 
 NS_ASSUME_NONNULL_END

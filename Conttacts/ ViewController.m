@@ -33,8 +33,9 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"Контакты";
     self.tableView = [UITableView new];
-    //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CeilViewTableViewCell"];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.tableView registerClass:[HeaderCell2 class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
      self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.tableView];
@@ -65,22 +66,30 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     [self.tableView registerNib:nibb forCellReuseIdentifier:@"CeilViewTableViewCell"];
    
     
-//    _arrOfSections = [[NSMutableArray alloc] init];
-//    _arrOfSections = [self getArrOfSections];
-//
-//    self.expanded = [NSMutableArray array];
-//    for(NSInteger i=0; i< self.arrOfSections.count; i++){
-//        [self.expanded addObject:@NO];
-//    }
-//
-//    _dictionary = [NSMutableDictionary new];
-//    _dictionary = [self getDictionary];
     
     _contacts = [[NSMutableArray alloc] init];
     _dictionary=[[NSMutableDictionary alloc] init];
     _arrOfSections = [[NSMutableArray alloc] init];
     self.expanded = [NSMutableArray array];
     [self getArrOfContacts];
+}
+
+
+-(void)sortRowsinSection{
+    if (self.dictionary == nil)
+        return;
+    else{
+        for(NSString *key in self.arrOfSections){
+            NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[self.dictionary objectForKey:key]];
+            NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"fulname" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+            NSMutableArray *a = [[NSMutableArray alloc] init];
+            
+            a=[arr sortedArrayUsingDescriptors:@[sort]];
+            [self.dictionary removeObjectForKey:key];
+            [self.dictionary setObject:a forKey:key];
+           
+        }
+    }
 }
 
 
@@ -101,6 +110,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                                               [accessDeniedLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:20],
                                               [self.view.trailingAnchor constraintEqualToAnchor:accessDeniedLabel.trailingAnchor constant:20]]];
 }
+
 
 -(NSMutableArray*)getArrOfSections{
     NSMutableSet *setEnglish = [[NSMutableSet alloc] init];
@@ -164,35 +174,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     NSMutableDictionary *dictionary =[NSMutableDictionary new];
    for(NSString *key in _arrOfSections ) {
         for(Contact *value in self.contacts){
-            if([value.lastName isEqualToString:@""]){
-                if([key isEqualToString:[[value.firstName substringToIndex:1]uppercaseString]]){
-                    if ([dictionary objectForKey:key] == nil )
-                    {
-                        [dictionary setObject:[NSMutableArray new] forKey:key];
-                        [[dictionary objectForKey:key] addObject:value];
-                    }
-                    
-                    else
-                        [[dictionary objectForKey:key] addObject:value];
-                }
-                else if([key isEqualToString:@"#"] &&
-                        ([value.firstName characterAtIndex:0]<65
-                         || ([value.firstName characterAtIndex:0]<97  && [value.firstName characterAtIndex:0]>90)
-                         || ([value.firstName characterAtIndex:0]<1040  && [value.firstName characterAtIndex:0]>122)
-                         || ([value.firstName characterAtIndex:0]>1103)))
-                {
-                    if ([dictionary objectForKey:@"#"] == nil )
-                    {
-                        [dictionary setObject:[NSMutableArray new] forKey:@"#"];
-                        [[dictionary objectForKey:@"#"] addObject:value];
-                    }
-                    
-                    else
-                        [[dictionary objectForKey:@"#"] addObject:value];
-                }
-            }
-            
-            else{
+            if(![value.lastName isEqualToString:@""]) {
                 if([key isEqualToString:[[value.lastName substringToIndex:1]uppercaseString]]){
                     if ([dictionary objectForKey:key] == nil )
                     {
@@ -220,6 +202,35 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                 }
                 
             }
+            else{
+                if([key isEqualToString:[[value.firstName substringToIndex:1]uppercaseString]]){
+                    if ([dictionary objectForKey:key] == nil )
+                    {
+                        [dictionary setObject:[NSMutableArray new] forKey:key];
+                        [[dictionary objectForKey:key] addObject:value];
+                    }
+
+                    else
+                        [[dictionary objectForKey:key] addObject:value];
+                }
+                else if([key isEqualToString:@"#"] &&
+                        ([value.firstName characterAtIndex:0]<65
+                         || ([value.firstName characterAtIndex:0]<97  && [value.firstName characterAtIndex:0]>90)
+                         || ([value.firstName characterAtIndex:0]<1040  && [value.firstName characterAtIndex:0]>122)
+                         || ([value.firstName characterAtIndex:0]>1103)))
+                {
+                    if ([dictionary objectForKey:@"#"] == nil )
+                    {
+                        [dictionary setObject:[NSMutableArray new] forKey:@"#"];
+                        [[dictionary objectForKey:@"#"] addObject:value];
+                    }
+
+                    else
+                        [[dictionary objectForKey:@"#"] addObject:value];
+                }
+            }
+            
+        
         }
     }
     
@@ -243,6 +254,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                     Contact *newContact = [[Contact alloc] init];
                     newContact.firstName = contact.givenName;
                     newContact.lastName = contact.familyName;
+                    newContact.fulname =  [NSString stringWithFormat:@"%@%@",newContact.lastName,newContact.firstName];
                     if(contact.imageDataAvailable){
                         UIImage *img = [[UIImage alloc] initWithData:contact.imageData];
                         newContact.image = img;
@@ -271,6 +283,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                 [self.expanded addObject:@NO];
             }
             self.dictionary =[self getDictionary];
+            [self sortRowsinSection];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
@@ -354,7 +367,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     Contact *contact = [sectionContacts objectAtIndex:indexPath.row];
     ceil.cnt= contact;
     ceil.delegate = self;
-     ceil.contactName.text = [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
+     ceil.contactName.text = [NSString stringWithFormat:@"%@ %@", contact.lastName, contact.firstName];
     return ceil;
 }
 

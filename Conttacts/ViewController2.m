@@ -26,17 +26,22 @@
   //  UINib *nibb = [UINib nibWithNibName:@"Person+imgCellView" bundle:nil];
     //[self.tableView registerNib:nibb forCellReuseIdentifier:@"PhotoAndNameTableViewCell"];
     [self.tableView registerClass:[Person_imgCellView class] forCellReuseIdentifier:@"PhotoAndNameTableViewCell"];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *backBtnImage = [UIImage imageNamed:@"arrow_left"];
+    [backBtn setBackgroundImage:backBtnImage forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backBtn] ;
+    self.navigationItem.leftBarButtonItem = backButton;
+    
+    [self.navigationItem.leftBarButtonItem.customView.widthAnchor constraintEqualToConstant:30].active = YES;
+    [self.navigationItem.leftBarButtonItem.customView.heightAnchor constraintEqualToConstant:30].active = YES;
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)goBack{
+    [self.navigationController popViewControllerAnimated:YES];
 }
-*/
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -81,11 +86,14 @@
         }
         
         cell.phoneLabel.text = self.contact.phones[indexPath.row - 1];
-        
+        [cell setIndentationWidth:70.0];
         return cell;
     }
 }
-
+- (BOOL)tableView:(UITableView *)tableView
+shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 

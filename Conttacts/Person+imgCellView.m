@@ -41,6 +41,8 @@
         
         self.contactInfoLabel = [UILabel new];
         [self.contactInfoLabel sizeToFit];
+        [self.contactInfoLabel setFont:[UIFont systemFontOfSize:23 weight:UIFontWeightMedium]];
+        self.contactInfoLabel.textColor = [UIColor blackColor];
         [self addSubview:self.contactInfoLabel];
         self.contactInfoLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
