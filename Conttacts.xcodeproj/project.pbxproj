@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		5E09AD5222AD99C200BAB130 /* HeaderCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E09AD5122AD99C200BAB130 /* HeaderCell2.m */; };
 		5E09AD5422ADA4DD00BAB130 /* HeaderCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E09AD5322ADA4DD00BAB130 /* HeaderCell2.xib */; };
+		5E09AD5D22ADDE9000BAB130 /* Person+imgCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E09AD5B22ADDE9000BAB130 /* Person+imgCellView.m */; };
+		5E09AD5E22ADDE9000BAB130 /* Person+imgCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E09AD5C22ADDE9000BAB130 /* Person+imgCellView.xib */; };
+		5E45F86822AE34AB00FFC702 /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E45F86622AE34AB00FFC702 /* ViewController2.m */; };
+		5E45F86922AE34AB00FFC702 /* ViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E45F86722AE34AB00FFC702 /* ViewController2.xib */; };
+		5E45F86C22AE379D00FFC702 /* PhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E45F86B22AE379D00FFC702 /* PhoneCell.m */; };
 		5EF20E2022AB9BF5009DAF20 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E1F22AB9BF5009DAF20 /* AppDelegate.m */; };
 		5EF20E2322AB9BF5009DAF20 /*  ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF20E2222AB9BF5009DAF20 /*  ViewController.m */; };
 		5EF20E2622AB9BF5009DAF20 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EF20E2422AB9BF5009DAF20 /* Main.storyboard */; };
@@ -24,6 +29,14 @@
 		5E09AD5022AD99C200BAB130 /* HeaderCell2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderCell2.h; sourceTree = "<group>"; };
 		5E09AD5122AD99C200BAB130 /* HeaderCell2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderCell2.m; sourceTree = "<group>"; };
 		5E09AD5322ADA4DD00BAB130 /* HeaderCell2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderCell2.xib; sourceTree = "<group>"; };
+		5E09AD5A22ADDE9000BAB130 /* Person+imgCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Person+imgCellView.h"; sourceTree = "<group>"; };
+		5E09AD5B22ADDE9000BAB130 /* Person+imgCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Person+imgCellView.m"; sourceTree = "<group>"; };
+		5E09AD5C22ADDE9000BAB130 /* Person+imgCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "Person+imgCellView.xib"; sourceTree = "<group>"; };
+		5E45F86522AE34AB00FFC702 /* ViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController2.h; sourceTree = "<group>"; };
+		5E45F86622AE34AB00FFC702 /* ViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController2.m; sourceTree = "<group>"; };
+		5E45F86722AE34AB00FFC702 /* ViewController2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController2.xib; sourceTree = "<group>"; };
+		5E45F86A22AE379D00FFC702 /* PhoneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhoneCell.h; sourceTree = "<group>"; };
+		5E45F86B22AE379D00FFC702 /* PhoneCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhoneCell.m; sourceTree = "<group>"; };
 		5EF20E1B22AB9BF5009DAF20 /* Conttacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conttacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF20E1E22AB9BF5009DAF20 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5EF20E1F22AB9BF5009DAF20 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -88,6 +101,14 @@
 				5E09AD5022AD99C200BAB130 /* HeaderCell2.h */,
 				5E09AD5122AD99C200BAB130 /* HeaderCell2.m */,
 				5E09AD5322ADA4DD00BAB130 /* HeaderCell2.xib */,
+				5E09AD5A22ADDE9000BAB130 /* Person+imgCellView.h */,
+				5E09AD5B22ADDE9000BAB130 /* Person+imgCellView.m */,
+				5E09AD5C22ADDE9000BAB130 /* Person+imgCellView.xib */,
+				5E45F86522AE34AB00FFC702 /* ViewController2.h */,
+				5E45F86622AE34AB00FFC702 /* ViewController2.m */,
+				5E45F86722AE34AB00FFC702 /* ViewController2.xib */,
+				5E45F86A22AE379D00FFC702 /* PhoneCell.h */,
+				5E45F86B22AE379D00FFC702 /* PhoneCell.m */,
 			);
 			path = Conttacts;
 			sourceTree = "<group>";
@@ -150,10 +171,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EF20E2B22AB9BFA009DAF20 /* LaunchScreen.storyboard in Resources */,
+				5E09AD5E22ADDE9000BAB130 /* Person+imgCellView.xib in Resources */,
 				5EF20E3B22ABDCDC009DAF20 /* CeilViewTableViewCell.xib in Resources */,
 				5E09AD5422ADA4DD00BAB130 /* HeaderCell2.xib in Resources */,
 				5EF20E2822AB9BFA009DAF20 /* Assets.xcassets in Resources */,
 				5EF20E2622AB9BF5009DAF20 /* Main.storyboard in Resources */,
+				5E45F86922AE34AB00FFC702 /* ViewController2.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,10 +187,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E09AD5D22ADDE9000BAB130 /* Person+imgCellView.m in Sources */,
+				5E45F86C22AE379D00FFC702 /* PhoneCell.m in Sources */,
 				5EF20E3622ABACEB009DAF20 /* Contact.m in Sources */,
 				5E09AD5222AD99C200BAB130 /* HeaderCell2.m in Sources */,
 				5EF20E2322AB9BF5009DAF20 /*  ViewController.m in Sources */,
 				5EF20E3A22ABDCDC009DAF20 /* CeilViewTableViewCell.m in Sources */,
+				5E45F86822AE34AB00FFC702 /* ViewController2.m in Sources */,
 				5EF20E2E22AB9BFA009DAF20 /* main.m in Sources */,
 				5EF20E2022AB9BF5009DAF20 /* AppDelegate.m in Sources */,
 			);

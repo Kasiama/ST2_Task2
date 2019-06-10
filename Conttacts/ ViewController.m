@@ -10,17 +10,19 @@
 #import "Contact.h"
 #import "CeilViewTableViewCell.h"
 #import "HeaderCell2.h"
+#import "ViewController2.h"
 #import <Contacts/Contacts.h>
 
 NSString * const cellReuseId = @"cellReuseId";
 NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 
-@interface ViewController ()<UITableViewDelegate,UITableViewDataSource,DemoHeaderViewListener2>
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource,DemoHeaderViewListener2,CeilViewTableViewCellDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *contacts;
 @property (strong, nonatomic) NSMutableArray *arrOfSections;
 @property (strong, nonatomic) NSMutableArray *expanded;
 @property (strong, nonatomic) NSMutableDictionary *dictionary;
+
 @end
 
 @implementation ViewController
@@ -56,6 +58,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
     UINib *nibb = [UINib nibWithNibName:@"CeilViewTableViewCell" bundle:nil];
     [self.tableView registerNib:nibb forCellReuseIdentifier:@"CeilViewTableViewCell"];
    
@@ -237,7 +240,10 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     return _arrOfSections.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    return 60;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 70;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSNumber *state  = self.expanded[section];
@@ -271,6 +277,8 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     
    NSArray *sectionContacts = [self.dictionary objectForKey:[self.arrOfSections objectAtIndex:indexPath.section]];
     Contact *contact = [sectionContacts objectAtIndex:indexPath.row];
+    ceil.cnt= contact;
+    ceil.delegate = self;
      ceil.contactName.text = [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
     return ceil;
 }
@@ -317,6 +325,10 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     configuraion.performsFirstActionWithFullSwipe = NO;
     return configuraion;
 }
-
+-(void)showInfoControllerWithContact:(Contact *)contact {
+    ViewController2 *vc = [[ViewController2 alloc] initWithNibName:@"ViewController2" bundle:nil];
+    vc.contact = contact;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 @end
 
