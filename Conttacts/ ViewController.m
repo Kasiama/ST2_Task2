@@ -212,7 +212,27 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 }
 
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *sectionTitle = [self.arrOfSections objectAtIndex:indexPath.section];
+    NSArray *section = [self.dictionary objectForKey:sectionTitle];
+    Contact *contact = [section objectAtIndex:indexPath.row];
+    
+    NSMutableString *contactDetails = [NSMutableString stringWithString:@"Контакт"];
+    if (contact.firstName.length != 0) {
+        [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.firstName]];
+    }
+    if (contact.lastName.length != 0) {
+        [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.lastName]];
+    }
+    if (contact.phones.count != 0) {
+        [contactDetails appendString:[NSString stringWithFormat:@", номер телефона %@", contact.phones[0] ]];
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:contactDetails preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _arrOfSections.count;
 }
